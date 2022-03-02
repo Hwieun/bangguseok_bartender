@@ -16,20 +16,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UserRepositoryTest {
 
-    @Autowired
-    UserRepository userRepository;
+	@Autowired
+	UserRepository userRepository;
 
-    @Test
-    public void 유저_조회() throws Exception {
-        // given
-        Long userId = 1L;
+	@Test
+	public void 유저_조회() throws Exception {
+		// given
+		Long userId = 1L;
 
-        // when
-        User user = userRepository.findById(userId);
+		// when
+		User user = userRepository.findById(userId);
 
-        // then
-        Assertions.assertNotNull(user);
-        log.info(user.toString());
-    }
+		// then
+		Assertions.assertNotNull(user);
+		log.info(user.toString());
+	}
 
 }

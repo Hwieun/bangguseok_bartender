@@ -29,6 +29,7 @@ public class CocktailServiceTest {
 
 	@Resource
 	private CocktailService cocktailService;
+
 	@Resource
 	private CocktailRepository CocktailRepositoryNew;
 
@@ -50,10 +51,10 @@ public class CocktailServiceTest {
 		cocktailRequest.setTechnique("BUILD");
 		cocktailRequest.setImageUri(null);
 		// when
-		Long cocktailId = cocktailService.createCocktail(1L, cocktailRequest);
+		Cocktail cocktail = cocktailService.createCocktail(1L, cocktailRequest);
 
 		// then
-		Cocktail cocktail1 = CocktailRepositoryNew.findById(cocktailId).get();
+		Cocktail cocktail1 = CocktailRepositoryNew.findById(cocktail.getId()).get();
 
 		// em.flush();
 		assertThat(cocktailRequest.getDescription()).isEqualTo(cocktail1.getDescription());
@@ -77,7 +78,7 @@ public class CocktailServiceTest {
 
 	@Test
 	public void 수정() throws Exception {
-	    // given
+		// given
 		Long userId = 1L;
 		Long cocktailId = 2L;
 		Cocktail cocktail1 = CocktailRepositoryNew.findById(cocktailId).get();
@@ -95,7 +96,8 @@ public class CocktailServiceTest {
 		// then
 		Cocktail modified = CocktailRepositoryNew.findById(cocktailId).get();
 		assertThat(modified.getRecipe().getTechnique()).isEqualTo(cocktail1.getRecipe().getTechnique());
-		assertThat(modified.getRecipe().getRecipeItems()).map(m -> m.getIngredient().getName()).doesNotContain("Whiskey");
+		assertThat(modified.getRecipe().getRecipeItems()).map(m -> m.getIngredient().getName())
+				.doesNotContain("Whiskey");
 		assertThat(modified.getRecipe().getRecipeItems()).map(m -> m.getIngredient().getName()).contains("Gin");
 	}
 
@@ -144,7 +146,8 @@ public class CocktailServiceTest {
 		cocktailRequest.getIngredientIdList().add(1L);
 
 		// when
-		Assertions.assertThrows(UnauthorizedException.class, () -> cocktailService.updateCocktail(userId, cocktailId, cocktailRequest));
+		Assertions.assertThrows(UnauthorizedException.class,
+				() -> cocktailService.updateCocktail(userId, cocktailId, cocktailRequest));
 		// then
 	}
 
@@ -168,7 +171,7 @@ public class CocktailServiceTest {
 		// when
 
 		// then
-//		assertThat(cocktail.isPresent()).isEqualTo(false);
+		// assertThat(cocktail.isPresent()).isEqualTo(false);
 
 	}
 
